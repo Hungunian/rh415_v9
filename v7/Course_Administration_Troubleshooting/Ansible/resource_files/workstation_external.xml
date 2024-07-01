@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+  <short>External</short>
+  <description>For use on external networks. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</description>
+  <service name="ssh"/>
+  <masquerade/>
+  <forward-port to-addr="172.25.250.10" to-port="22" protocol="tcp" port="122"/>
+  <forward-port to-addr="172.25.250.11" to-port="22" protocol="tcp" port="222"/>
+  <forward-port to-addr="172.25.250.12" to-port="22" protocol="tcp" port="322"/>
+  <forward-port to-addr="172.25.250.13" to-port="22" protocol="tcp" port="422"/>
+  <forward-port to-addr="172.25.250.16" to-port="22" protocol="tcp" port="522"/>
+  <forward-port to-addr="172.25.250.14" to-port="22" protocol="tcp" port="622"/>
+  <forward-port to-addr="172.25.250.15" to-port="22" protocol="tcp" port="722"/>
+</zone>
+

@@ -1,0 +1,60 @@
+Host *.ilt.example.com f* g*
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User kiosk
+Host classroom.example.com classroom c
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User instructor
+Host *.example.com *
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User student
+
+Host workstation?*
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User root
+
+Host servera?*
+    Port 122
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User root
+
+Host serverb?*
+    Port 222
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User root
+
+Host serverc?*
+    Port 322
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User root
+
+Host serverd?*
+    Port 422
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User root
+
+Host servere?*
+    Port 522
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User root
+
+Host tower?*
+    Port 622
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User root
+
+Host satellite?*
+    Port 722
+    StrictHostKeyChecking no
+    PreferredAuthentications publickey
+    User root
+

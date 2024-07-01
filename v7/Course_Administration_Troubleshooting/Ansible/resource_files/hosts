@@ -1,0 +1,32 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+### rht-vm-hosts file listing the entries to be appended to /etc/hosts
+
+172.25.250.10	servera.lab.example.com servera
+172.25.250.11	serverb.lab.example.com serverb
+172.25.250.12	serverc.lab.example.com serverc
+172.25.250.13	serverd.lab.example.com serverd
+172.25.250.16	servere.lab.example.com servere
+172.25.250.14	tower.lab.example.com tower
+172.25.250.15	satellite.lab.example.com satellite
+172.25.250.254	workstation.lab.example.com workstation
+
+
+172.25.252.1   workstation1 satellite1 servera1 serverb1 serverc1 serverd1 servere1
+172.25.252.2   workstation2 satellite2 servera2 serverb2 serverc2 serverd2 servere2
+172.25.252.3   workstation3 satellite3 servera3 serverb3 serverc3 serverd3 servere3
+172.25.252.4   workstation4 satellite4 servera4 serverb4 serverc4 serverd4 servere4
+172.25.252.5   workstation5 satellite5 servera5 serverb5 serverc5 serverd5 servere5
+172.25.252.6   workstation6 satellite6 servera6 serverb6 serverc6 serverd6 servere6
+172.25.252.7   workstation7 satellite7 servera7 serverb7 serverc7 serverd7 servere7
+172.25.252.8   workstation8 satellite8 servera8 serverb8 serverc8 serverd8 servere8
+172.25.252.9   workstation9 satellite9 servera9 serverb9 serverc9 serverd9 servere9
+172.25.252.10   workstation10 satellite10 servera10 serverb10 serverc10 serverd10 servere10
+172.25.252.11   workstation11 satellite11 servera11 serverb11 serverc11 serverd11 servere11
+172.25.252.12   workstation12 satellite12 servera12 serverb12 serverc12 serverd12 servere12
+172.25.252.13   workstation13 satellite13 servera13 serverb13 serverc13 serverd13 servere13
+172.25.252.14   workstation14 satellite14 servera14 serverb14 serverc14 serverd14 servere14
+172.25.252.15   workstation15 satellite15 servera15 serverb15 serverc15 serverd15 servere15
+172.25.252.16   workstation16 satellite16 servera16 serverb16 serverc16 serverd16 servere16
+172.25.252.17   workstation17 satellite17 servera17 serverb17 serverc17 serverd17 servere17
+

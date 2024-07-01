@@ -1,0 +1,156 @@
+:imagesdir: images/
+
+== Introduction
+
+VMs running on FoundationX share an external 172.25.250.0/24 network, with a gateway of 172.25.250.254 (*workstation.lab.example.com*). DNS services for the private network are provided by 172.25.250.254 (*workstation*), so the *Workstation* VM must be started first.
+
+=== Environment Overview and Launching an Instance
+
+image::Classroom-Architecture.png[title="Classroom Environment Layout", align="center"]
+
+There are eight systems used to comprise the entire classroom environment (in addition to *Workstation*). The listing of machines are:
+
+* *servera*
+* *serverb*
+* *serverc*
+* *serverd*
+* *servere*
+* *satellite*
+* *tower*
+
+
+.*Security Classroom Layout and Information*
+[cols=3,options=header]
+|===
+|Machine Name
+|IP Address
+|Role
+
+
+|*servera.lab.example.com*
+|172.25.250.10
+|Managed Server "A"
+
+|*serverb.lab.example.com*
+|172.25.250.11
+|Managed Server "B"
+
+|*serverc.lab.example.com*
+|172.25.250.12
+|Managed Server "C"
+
+|*serverd.lab.example.com*
+|172.25.250.13
+|Managed Server "D"
+
+|*servere.lab.example.com*
+|172.25.250.16
+|Managed Server "E"
+
+|*satellite.lab.example.net*
+|172.25.250.15
+|Red Hat Satellite 6 Server
+
+|*tower.lab.example.net*
+|172.25.250.14
+|Red Hat Ansible Tower server
+
+|*workstation.lab.example.com* / *workstation0.example.com*
+|172.25.250.254 / 172.25.252.250
+|Graphical Workstation as Student Desktop
+
+|*_classroom.example.com_*
+|172.25.254.254 / 172.25.252.254 / 172.25.253.254
+|Classroom utility server
+
+|*_foundation0.ilt.example.com_* / *foundationX.ilt.example.com*
+|172.25.254.250 / 172.25.253.250 / 172.25.254.*X*
+|Physical System
+
+|===
+
+NOTE: The *classroom* server acts as a NAT router for the classroom network. It provides DNS, DHCP, HTTP, and other services. It is also known by *content.example.com* and *materials.example.com*.
+
+
+*Classroom Credentials*
+[cols=3,options=header]
+|===
+|System(s)
+|Username
+|Password
+
+| Student Systems (regular user)
+| student
+| student
+
+| Student Systems (Root user)
+| root
+| redhat
+
+
+| Satellite
+| admin
+| redhat
+
+
+| Ansible Tower
+| admin
+| redhat
+
+|===
+
+
+TIP: The setup scripts are meant to catch up labs between chapters. It should be noted that labs are meant to be successive for this course.
+
+
+WARNING: The Workstation VM must be the first machine powered on. After workstation is up, the Satellite machine should be powered on before any of the other machines. After Workstation and Satellite have both been powered on and running, it is safe to start all other VMs with *rht-vmctl start all* command.
+
+IMPORTANT: Grading/Setup scripts located http://content/courses/rh415/rhel7.5/grading-scripts/. The Ansible playbooks are located at http://content/courses/rh415/rhel7.5/infrastructure/.Overall classroom files are http://content/courses/rh415/rhel7.5/.
+
+
+=== Accessing the System Externally
+
+If using a Macbook or another system on the classroom network, it will be assigned an IP address. The way to access workstation is with the *172.25.252.X* IP address. Once on workstation, you can get to other systems. The other method is to access *FoundationX* directly, which can be done with the *172.25.254.X* IP address.
+
+TIP: For a Mac/Linux system, you can use "sudo route -n add/delete 172.25.0.0/16" with a gateway of *172.25.254.254* to route traffic across multiple interfaces.
+
+NOTE: The *Foundation0* system IP address *172.25.254.250* is the instructor system.
+
+TIP: Grading scripts get downloaded locally to */usr/local/lib* and several executables for the environment also live in */usr/local/bin/lab*
+
+CAUTION: To preserve system resources, the *Satellite* and *Tower* VMs can be turned except when they are needed to be used in Chapter 8.
+
+==== Accessing FoundationX VMs from Foundation0
+
+With the exception of *WorkstationX*, VMs running on *FoundationX* cannot be accessed directly from *Foundation0*. In order to make items more efficient, a set of Ansible playbooks and resource files has been created to allow accessing VMs running on *FoundationX* remotely from Foundation0 by setting up port forwarding on *WorkstationX*.
+
+
+
+.*Accessing Systems Remotely*
+[cols=2,options=header]
+|===
+|Machine Name
+|IP Port
+
+|*servera*
+|122
+
+|*serverb*
+|222
+
+|*serverc*
+|322
+
+|*serverd*
+|422
+
+|*servere*
+|522
+
+|*satellite*
+|722
+
+|*tower*
+|622
+
+|===

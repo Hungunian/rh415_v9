@@ -1,0 +1,14 @@
+---
+- hosts: foundation0
+      
+  tasks:
+    - name: Copy SSH Config File
+      copy:
+        src: ./resource_files/config
+        dest: /home/kiosk/.ssh/config
+
+    - name: Hosts File
+      copy:
+        src: ./resource_files/hosts
+        dest: /etc/hosts
+

@@ -1,0 +1,12 @@
+---
+- hosts: Workstation
+      
+  tasks:
+    - name: Firewall Config File
+      copy:
+        src: ./resource_files/workstation_external.xml
+        dest: /etc/firewalld/zones/external.xml
+    - name: Reload FirewallD
+      command: firewall-cmd --reload
+        
+

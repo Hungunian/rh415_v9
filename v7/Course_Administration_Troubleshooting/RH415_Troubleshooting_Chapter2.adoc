@@ -1,0 +1,58 @@
+:imagesdir: images/
+
+
+
+== Gaining Remote Access with BASH
+
+.Objectives
+
+* Setup SSH *config* and */etc/hosts* on *Foundation0*
+* Copy *workstation_external.xml* to */etc/firewalld/zones/external.xml* on *WorkstationX*
+* Reload FirewallD service on *WorkstationX*
+
+In order to access the systems remotely and gain remote access, it is necessary to setup and configure *FirewallD* to perform port forwarding, masquerading, and NAT from the *WorkstationX* machine.
+
+=== Configuring Foundation0
+
+In the previous chapter, the *RH415_Ansible.tgz* was downloaded and extracted. This contains the files needed for both *Foundation0* and *WorkstationX* systems. In order to *Foundation0* to properly access the remote VMs, both */etc/hosts* and */home/kiosk/.ssh/config* files need to be updated. The files that will be used on *Foundation0* are located in the */home/kiosk//Ansible/resource_files* directory.
+
+==== Configuring */home/kiosk/.ssh/config*
+
+There is a new *config* file that can replace and create the */home/kiosk/.ssh/config* file which will have everything setup to allow an SSH session to be made to a remote system using *ssh root@servera8* as an example. This will allow you to directly SSH to the *servera* system that is a hosted VM on *foundation8*.
+
+. Place the */home/kiosk//Ansible/resource_files/config* in the */home/kiosk/.ssh/* Directory.
++
+.Copy File to Directory
+[source,bash]
+----
+[kiosk@foundation0 ~]$ pwd
+
+[kiosk@foundation0 ~]$
+----
+
+[TIP]
+====
+Modifying */etc/hosts* must be completed as root.
+====
+
+. Replace */etc/hosts* with */home/kiosk//Ansible/resource_files/hosts* File.
++
+.Copying New */etc/hosts* File
+[source,bash]
+----
+[kiosk@foundation0 ~]$ tar -xvf RH415_Ansible.tgz
+Ansible/
+Ansible/resource_files/
+Ansible/resource_files/hosts
+Ansible/resource_files/workstation16_external.xml
+Ansible/resource_files/workstation17_external.xml
+Ansible/resource_files/config
+Ansible/resource_files/workstation_external.xml
+Ansible/DeploySSH.yml
+Ansible/WorkstationFW.yml
+Ansible/inventory
+Ansible/ansible.cfg
+
+----
+
+=== Configuring WorkstationX

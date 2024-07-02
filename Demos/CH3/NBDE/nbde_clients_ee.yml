@@ -1,0 +1,17 @@
+---
+- hosts: clients
+  become: true
+  become_method: sudo
+  vars:
+    nbde_client_bindings:
+      - device: /dev/vdb1
+        encryption_password: redhatIBM
+        servers:
+          - http://serverb.lab.example.com
+          - http://serverc.lab.example.com
+          - http://serverd.lab.example.com
+        threshold: 3
+
+  roles:
+    - redhat.rhel_system_roles.nbde_client
+      

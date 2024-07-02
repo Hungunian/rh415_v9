@@ -19,4 +19,5 @@ cryptsetup close secretdata
 
 Extending the DEMO - Boot mounting
 
+References: https://people.redhat.com/~tmichett/Clevis_Tang/
 

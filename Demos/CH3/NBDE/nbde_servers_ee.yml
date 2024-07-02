@@ -1,0 +1,12 @@
+---
+- hosts: servers
+  become: true
+  become_method: sudo
+
+  vars:
+    nbde_server_rotate_keys: yes
+    nbde_server_manage_firewall: true
+    nbde_server_manage_selinux: true
+
+  roles:
+    - redhat.rhel_system_roles.nbde_server

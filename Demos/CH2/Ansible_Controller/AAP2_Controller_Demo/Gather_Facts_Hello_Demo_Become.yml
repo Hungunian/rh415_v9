@@ -1,0 +1,26 @@
+- name: Hello World Sample Message
+  hosts: all
+  gather_facts: "{{ variable_facts | default('true') }}"
+  tasks:
+
+    - name: Show user for the play with Become=True
+      shell: |
+        whoami
+      become: false 
+      register: username    
+
+    - name: Hello Message - Demo (Regular User.)
+      debug:
+        msg: "Hello World! I'm a message from {{  inventory_hostname }} and my IP address is {{ ansible_facts['default_ipv4']['address'] }} and I'm {{ username.stdout }} and I'm not root, because BECOME is false !!!!"
+
+    - name: Show user for the play with Become=True
+      shell: |
+        whoami
+      become: true
+      register: username       
+
+    - name: Hello Message - Demo Become Root
+      debug:
+        msg: "Hello World! I'm a message from {{  inventory_hostname }} and my IP address is {{ ansible_facts['default_ipv4']['address'] }} and I'm {{ username.stdout }} because I became root !!!!"
+
+       

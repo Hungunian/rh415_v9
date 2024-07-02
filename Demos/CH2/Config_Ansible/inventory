@@ -1,0 +1,14 @@
+[PROD]
+servera
+serverb
+
+[TEST]
+serverc
+serverd
+
+[DEV]
+workstation
+
+[SERVERS:children]
+PROD
+TEST

@@ -1,0 +1,4 @@
+lab start ansible-configure
+sudo dnf install ansible-navigator
+
+lab start ansible-controller-intro

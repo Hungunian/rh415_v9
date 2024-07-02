@@ -1,0 +1,15 @@
+---
+- name: Play to disable SSH password-based authentication
+  hosts: PROD
+  tasks:
+    - name: Task to disable SSH password-based authentication
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: 'PasswordAuthentication yes'
+        backrefs: yes
+        line: 'PasswordAuthentication no'
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+...

@@ -1,0 +1,10 @@
+- name: Hello World Sample Message
+  hosts: all
+  vars:
+    variable_one: I'm Variable One
+    variable_two: 2
+  tasks:
+    - name: Hello Message - Demo
+      debug:
+        msg: "Hello World! I'm a message from {{  inventory_hostname }}!!! I have two variables. The value for variable_one is {{ variable_one }} and the value for variable_two is {{ variable_two }}"
+       

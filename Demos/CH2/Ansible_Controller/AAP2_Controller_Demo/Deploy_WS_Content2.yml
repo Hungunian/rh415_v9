@@ -1,0 +1,10 @@
+---
+- name: Playbook to Configure Webserver Content
+  hosts: "{{ variable_host | default('servera') }}"
+  become: true
+  gather_facts: "{{ variable_facts | default('true') }}"
+  tasks:
+    - name: Create Content for Webserver
+      copy:
+        content: "I'm an awesome webserver demo for the DO374 Course\n"
+        dest: /var/www/html/index.html

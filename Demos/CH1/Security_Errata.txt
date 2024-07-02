@@ -1,0 +1,11 @@
+lab start securityrisk-errata 
+
+dnf updateinfo --security
+
+dnf updateinfo list updates 
+
+dnf updateinfo list updates security
+
+dnf updateinfo --sec-severity Moderate
+
+dnf updateinfo list --sec-severity Moderate

@@ -1,0 +1,20 @@
+---
+- name: Demo Failure
+  hosts: ios
+  order: sorted
+  gather_facts: false
+  vars:
+    fail_me: true
+  tasks:
+    - name: Display Configured VLANS
+      cisco.ios.ios_command:
+        commands:
+          - show vlans
+      register: vlan_result
+
+    - name: Providing Custom Failure Message for a Missing VLAN Config
+      ansible.builtin.fail:
+        msg: "Missing VLAN configuration"
+      when: 
+        - "'No Virtual LANs configured' in vlan_result['stdout'][0]"
+        - fail_me 

@@ -1,0 +1,15 @@
+ansible-navigator inventory  -m stdout --graph
+
+## Checking Connectivity with SSH (no-password)
+ansible-navigator exec -- ansible -m ping all
+
+## Checking Become User without password
+ansible-navigator exec -- ansible -m ping all --become
+
+## Checking Become User with password
+ansible-navigator exec -- ansible -m ping all --become -K
+
+## Viewing User and Verifiying Config
+
+ansible-navigator exec -- ansible -m shell -a 'whoami' all --become -K
+ansible-navigator exec -- ansible -m shell -a 'whoami' all

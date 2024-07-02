@@ -1,0 +1,14 @@
+- name: Hello World Sample Message
+  hosts: all
+  gather_facts: "{{ variable_facts | default('true') }}"
+  vars: 
+    variable_one: Var1 
+    varibale_two: Var2
+  tasks:
+    - name: Hello Message - Demo Facts
+      debug:
+        msg: "Hello World! I'm a message from {{  inventory_hostname }} and my IP address is {{ ansible_facts['default_ipv4']['address'] }}  !!!!"
+       
+    - name: Hello Message - Demo Variables
+      debug:
+        msg: "I'm  Variable_One: {{variable_one}}, I'm  Variable_Two: {{variable_two}}, and I'm  Variable_Three: {{variable_three}} from {{  inventory_hostname }} !!!!"

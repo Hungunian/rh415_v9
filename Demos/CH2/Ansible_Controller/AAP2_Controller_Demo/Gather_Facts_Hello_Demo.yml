@@ -1,0 +1,8 @@
+- name: Hello World Sample Message
+  hosts: all
+  gather_facts: "{{ variable_facts | default('true') }}"
+  tasks:
+    - name: Hello Message - Demo
+      debug:
+        msg: "Hello World! I'm a message from {{  inventory_hostname }} and my IP address is {{ ansible_facts['default_ipv4']['address'] }}  !!!!"
+       

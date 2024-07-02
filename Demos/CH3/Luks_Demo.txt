@@ -1,0 +1,22 @@
+lab start luks-manage
+
+Do on ServerA
+
+parted /dev/vdb mklabel msdos mkpart primary xfs 1M 1G
+parted /dev/vdb print
+cryptsetup luksFormat /dev/vdb1
+
+PW: redhatIBM
+
+cryptsetup open /dev/vdb1 secretdata
+mkfs.xfs /dev/mapper/secretdata 
+mkdir /secretdata
+mount /dev/mapper/secretdata /secretdata
+echo "I'm on an encrypted disk" > /secretdata/secret_message.txt
+cat /secretdata/secret_message.txt
+umount /secretdata 
+cryptsetup close secretdata 
+
+Extending the DEMO - Boot mounting
+
+

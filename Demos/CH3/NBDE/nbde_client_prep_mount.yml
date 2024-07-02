@@ -1,0 +1,31 @@
+---
+- hosts: clients
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Copy the Cryptab File 
+      ansible.builtin.copy:
+        src: cryptab_file_nbde
+        dest: /etc/crypttab
+
+    - name: Ensure Directory is there for SecretData
+      ansible.builtin.file:
+        path: /secretdata
+        state: directory
+        mode: '0755'
+
+    - name: Update /etc/fstab for new SecretData
+      ansible.posix.mount:
+        path: /secretdata
+        src: /dev/mapper/secretdata
+        fstype: xfs
+        state: present
+        opts: _netdev
+
+    - name: Reboot Server
+      ansible.builtin.reboot:
+        msg: Rebooting ServerA
+
+    - name: Show mounted filesystem
+      ansible.builtin.debug:
+        var: ansible_facts['mounts']

@@ -1,0 +1,28 @@
+lab start audit-configuring
+
+
+ssh root@servera
+
+# Configure AuditD 
+vim /etc/audit/auditd.conf
+name_format = hostname   ## Might need to modify this
+
+# Install and Configure Plugins
+dnf install audispd-plugins
+vim /etc/audit/plugins.d/au-remote.conf   ## Set active to Yes  Locations have changed from RHEL 7
+vim /etc/audit/audisp-remote.conf  ## Set remote_server to serverb
+service auditd restart  ## Can't use SystemD to restart 
+
+ssh root@serverb 
+# Configure AuditD  to Listen for Logs
+vim /etc/audit/auditd.conf  ## Uncomment TCP Listen Port
+firewall-cmd --zone=public --add-port=60/tcp --permanent
+firewall-cmd --zone=public --add-port=60/tcp
+service auditd restart
+
+## NOTE: You might need to reboot ServerA
+
+## Need to login to serverA and generate some audit Logs
+
+grep servera /var/log/audit/audit.log
+grep servera /var/log/audit/audit.log

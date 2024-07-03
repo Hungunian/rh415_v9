@@ -1,0 +1,27 @@
+lab start usb-usb
+
+sudo -i
+
+virsh start usbguard ; virsh console usbguard  (student/student)
+
+## Install packages and Create Initial Rules for the Service
+sudo -i
+dnf install usbguard usbutils udisks2
+usbguard generate-policy > /etc/usbguard/rules.conf  ## Create intiial rules with all allowed
+systemctl enable --now usbguard.service
+usbguard list-devices
+usbguard list-rules
+
+## Attach a USB Device from Workstation 
+sudo virsh attach-device usbguard /home/student/RH415/labs/usb-usb/usb-disk-red.xml
+ 
+ ## NOTE: If watching root on the VM, when attaching device will see STDOUT message about not being authorized
+
+usbguard list-devices
+usbguard allow-device 9  ## Allows the blocked device running only
+lsusb
+lsblk
+dmesg
+usbguard list-rules | grep RED  (notice it isn't in permanent rules, need the "-P" added to the command)
+usbguard allow-device -p 9  ## Allows the blocked device to the ruleset
+usbguard list-rules | grep RED

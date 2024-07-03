@@ -1,0 +1,20 @@
+lab start pam-selecting
+
+authconfig --savebackup=/root/pambackup  ## No longer exists in RHEL 9
+
+ssh root@serverc
+authselect list
+authselect list-features minimal
+authselect show minimal
+authselect current
+
+cat /etc/pam.d/system-auth
+cat /etc/pam.d/password-auth
+
+echo "deny = 2" > /etc/security/faillock.conf
+echo "unlock_time = 300" >> /etc/security/faillock.conf
+authselect select minimal with-pwhistory with-faillock    ## Might need to add "--force"
+authselect current
+
+cat /etc/pam.d/system-auth
+cat /etc/pam.d/password-auth

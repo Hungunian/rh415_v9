@@ -1,0 +1,13 @@
+## NOTE: Continues from PAM_Config.txt Demo
+
+vim /etc/ssh/sshd_config  ## Change PW Authentication to Yes
+systemctl restart sshd
+useradd travis
+echo "redhat" | passwd travis --stdin
+
+ssh travis@localhost  ### -o PubkeyAuthentication=no -o PreferredAuthentications=password
+
+faillock
+faillock --user travis
+faillock --user travis --reset
+faillock

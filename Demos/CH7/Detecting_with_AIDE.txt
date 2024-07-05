@@ -1,0 +1,26 @@
+lab start aide-detecting
+ssh root@servera
+dnf install aide
+
+### Clear out AIDE Configuration to make faster
+vim /etc/aide.conf
+
+# Next decide what directories/files you want in the database.
+
+/aidetest CONTENT_EX
+
+### Write the changes to the file and then create the dummy directory with a file
+
+mkdir /aidetest ; touch /aidetest/{one,two,3}
+
+## Initialize AIDE and setup initial DB and Check the Status
+aide --init
+mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+aide --check
+
+
+## Change some files 
+echo "I'm a new file" > /aidetest/four.txt
+echo "I changed two" > /aidetest/two 
+rm /aidetest/3
+aide --check

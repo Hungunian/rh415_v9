@@ -1,0 +1,14 @@
+ssh root@serverb 
+
+## Audit Report
+aureport -x --summary
+
+man ausearch
+man autrace
+man aureport 
+
+ausearch -m LOGIN
+
+## Tracing a program (remove custom audit rules)
+
+autrace /usr/sbin/useradd travis

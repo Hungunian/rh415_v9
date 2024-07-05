@@ -1,0 +1,24 @@
+ssh root@serverb
+
+mkdir /audit-demo
+echo "This is a test" >> /audit-demo/demo.txt
+
+
+
+## Create Rule with Key to monitor writes to /etc/passwd 
+auditctl -w /etc/passwd -p wa -k user-mods
+
+## Create Rule with Key to monitor changes in a directory
+auditctl -w /audit-demo -p rwa -k audit-demo-directory-changes
+
+## Create a Rule to monitory if the USERADD command is run
+auditctl -w /usr/bin/useradd -p x -k useradd-run
+
+## Generate changes on the system
+useradd travis3
+echo "This is another test" >> /audit-demo/test.txt
+
+
+## Search for changes
+ausearch -k audit-demo-directory-changes
+ausearch -k user-mods

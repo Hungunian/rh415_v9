@@ -13,8 +13,9 @@ vim /etc/audit/plugins.d/au-remote.conf   ## Set active to Yes  Locations have c
 vim /etc/audit/audisp-remote.conf  ## Set remote_server to serverb
 service auditd restart  ## Can't use SystemD to restart 
 
-ssh root@serverb 
+### Configure ServerB to Listen
 # Configure AuditD  to Listen for Logs
+ssh root@serverb 
 vim /etc/audit/auditd.conf  ## Uncomment TCP Listen Port
 firewall-cmd --zone=public --add-port=60/tcp --permanent
 firewall-cmd --zone=public --add-port=60/tcp

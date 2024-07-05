@@ -1,0 +1,6 @@
+ssh root@serverb
+cp /usr/share/audit/sample-rules/30-stig.rules  /etc/audit/rules.d/
+augenrules --load
+useradd travis2
+echo "redhat" | passwd travis2 --stdin
+ausearch -k identity

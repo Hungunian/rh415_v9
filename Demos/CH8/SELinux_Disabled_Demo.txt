@@ -21,6 +21,7 @@ man fixfiles
 ### https://wiki.centos.org/HowTos(2f)SELinux.html
 ### https://www.stigviewer.com/stig/red_hat_enterprise_linux_9/
 ### https://selinuxproject.org/page/PolicyConfigurationFiles
+### https://www.digitalocean.com/community/tutorials/an-introduction-to-selinux-on-centos-7-part-1-basic-concepts (Older but still good intro)
 
 
 

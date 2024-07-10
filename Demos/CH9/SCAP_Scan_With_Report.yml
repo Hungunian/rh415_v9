@@ -1,0 +1,79 @@
+---
+- name: Perform SCAP Scan
+  hosts: serverc
+  vars:
+    scap_profile: xccdf_org.ssgproject.content_profile_stig_gui
+    scap_data_stream: /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml
+    scap_report: true    ## SCAP_RESULTS must be set to TRUE if this is set to TRUE
+    scap_results: true   ## Must be set to TRUE in order to generate a SCAP report
+    scap_guide: true
+    scap_report_location: /var/www/html/Scan_Results.html
+    scap_results_location: /root/results.xml
+    scap_guide_locattion: /var/www/html/HTML_SCAP_Guide.html
+  tasks:
+
+  ## Done to eliminate issues from SELinux from other labs and demos not being cleaned up (not necessary for real life)
+    - name: Set SELinux Permissive
+      ansible.builtin.shell: setenforce 0
+
+    - name: Install OpenSCAP Packages
+      ansible.builtin.dnf:
+        name: 
+          - scap-security-guide
+          - httpd
+        state: latest
+
+    - name: Enable HTTPD Service
+      ansible.builtin.systemd:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Enable Firewall Port
+      ansible.posix.firewalld:
+        service: http
+        state: enabled
+        zone: external
+        permanent: true
+        immediate: yes
+
+    - name: Perform SCAP Guide Build
+      ansible.builtin.shell: |
+        oscap xccdf generate guide \
+        --profile {{ scap_profile }} \
+        {{ scap_data_stream }} > {{ scap_guide_locattion }}
+      when: scap_guide | bool
+
+    - name: Perform SCAP Scan and Generate Results
+      ansible.builtin.shell: |
+        oscap xccdf eval \
+        --profile {{ scap_profile }} \
+        --local-files \
+        --results {{ scap_results_location }} \
+        {{ scap_data_stream }} > /tmp/SCAP_SCAN_Output.txt
+      when: scap_results | bool
+
+    - name: Generating Report for SCAP Scan
+      block:
+
+        - name: Convert SCAP Scan Results to HTML Report
+          ansible.builtin.shell: |
+            oscap xccdf generate report \
+            {{ scap_results_location }} > {{ scap_report_location }}
+          when: scap_report | bool
+
+      rescue: 
+        - name: Print Error Message
+          ansible.builtin.debug:
+            msg: The report couldn't be generated because the playbook was run without first generating a results file. Please set the scap_results variable to true and re-run.
+
+      always:
+        - name: The SCAP Playbook has completed
+          ansible.builtin.debug:
+            msg: |
+              The SCAP scan has been completed and the files are located
+                - SCAP Guide: http://{{ ansible_default_ipv4.address }}/HTML_SCAP_Guide.html
+                - SCAP Scan Report: http://{{ ansible_default_ipv4.address }}/Scan_Results.html
+
+
+

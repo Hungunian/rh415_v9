@@ -1,0 +1,87 @@
+### PDF with References
+## https://people.redhat.com/~tmichett/Clevis_Tang/Encryption_and_Security.pdf
+
+
+
+[root@serverc ~]# dnf install scap-security-guide httpd 
+systemctl enable httpd --now 
+firewall-cmd --add-service=http --permanent
+firewall-cmd --reload
+
+[root@serverc ~]# oscap -V
+
+oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml
+
+oscap xccdf generate guide \
+--profile xccdf_org.ssgproject.content_profile_stig_gui \
+/usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml > /var/www/html/HTML_SCAP_Guide.html 
+
+## NOTE: IP Address of ServerC is 172.25.250.12
+http://172.25.250.12/HTML_SCAP_Guide.html
+
+[student@workstation ~]$ sudo dnf install scap-workbench
+
+
+#### Scanning for Compliance
+man scap-security-guide
+man oscap 
+
+
+#### Reference
+### https://access.redhat.com/solutions/5185891 (--local-files option to prevent warning about Internet access)
+### wget -O security-data-oval-com.redhat.rhsa-RHEL9.xml.bz2 https://access.redhat.com/security/data/oval/v2/RHEL9/rhel-9.oval.xml.bz2
+### https://access.redhat.com/security/data/oval/v2/RHEL9/
+
+
+## Scanning
+oscap xccdf eval \
+--local-files security-data-oval-com.redhat.rhsa-RHEL9.xml.bz2 \
+--profile xccdf_org.ssgproject.content_profile_stig_gui \
+--results /root/results.xml \
+/usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml 
+
+## Report in HTML 
+oscap xccdf generate report /root/results.xml > /var/www/html/Scan_Results.html
+
+## Viewing the report
+http://172.25.250.12/Scan_Results.html
+
+
+
+#### It is possible to Generate a report and results file in a single command
+
+oscap xccdf eval \
+--profile xccdf_org.ssgproject.content_profile_stig_gui \
+--local-files \
+--results /root/results_AIO.xml \
+--report /var/www/html/Scan_Results_Report_AIO.html \
+/usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml 
+
+
+
+
+#### Tailoring OpenSCAP Files with SCAP Workbench
+
+SCAP Workbench
+
+ProfileID Customized 
+xccdf_org.ssgproject.content_profile_stig_gui_customized
+
+*** Install SUDO 
+*** Password Required for SUDO 
+*** Password Minimum 20
+
+[student@workstation CH9]$ scp custom_scap_tailored_file.xml root@serverc:
+ssh root@serverc
+[root@serverc ~]# oscap info custom_scap_tailored_file.xml 
+
+oscap xccdf eval \
+--profile xccdf_org.ssgproject.content_profile_stig_gui_customized \
+--tailoring-file /root/custom_scap_tailored_file.xml \
+--local-files security-data-oval-com.redhat.rhsa-RHEL9.xml.bz2 \
+--results /root/results_custom.xml \
+--report /var/www/html/Scan_Results_Report_Custom.html \
+/usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml 
+
+
+http://172.25.250.12/Scan_Results_Report_Custom.html

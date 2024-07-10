@@ -1,6 +1,8 @@
 ### PDF with References
 ## https://people.redhat.com/~tmichett/Clevis_Tang/Encryption_and_Security.pdf
 
+## https://static.open-scap.org/
+
 
 
 [root@serverc ~]# dnf install scap-security-guide httpd 

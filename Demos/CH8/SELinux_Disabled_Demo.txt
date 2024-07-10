@@ -1,0 +1,64 @@
+cat /etc/selinux/config
+
+grubby --update-kernel ALL --remove-args selinux
+
+getenforce
+
+fixfiles --help
+man fixfiles
+
+
+## Reference
+### https://www.redhat.com/sysadmin/selinux-denial2
+### https://www.redhat.com/sysadmin/semanage-keep-selinux-enforcing
+### https://www.redhat.com/sysadmin/user-namespaces-selinux-rootless-containers  (Good to know - beyond content in course)
+### https://www.redhat.com/sysadmin/selinux-policies-booleans 
+### https://opensource.com/article/18/7/sysadmin-guide-selinux
+### https://docs.fedoraproject.org/en-US/quick-docs/selinux-troubleshooting/
+### https://people.redhat.com/rsawhill/selinux/
+### https://people.redhat.com/duffy/selinux/selinux-coloring-book_A4-Stapled.pdf
+### https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/pdf/using_selinux/red_hat_enterprise_linux-9-using_selinux-en-us.pdf
+### https://wiki.centos.org/HowTos(2f)SELinux.html
+### https://www.stigviewer.com/stig/red_hat_enterprise_linux_9/
+### https://selinuxproject.org/page/PolicyConfigurationFiles
+
+
+
+ausearch -m AVC,USER_AVC,SELINUX_ERR,USER_SELINUX_ERR -ts recent
+grep denied /var/log/audit/audit.log
+
+
+## Installing Additional SELinux Man Pages
+
+dnf install policycoreutils-devel
+sepolicy manpage --help
+sepolicy manpage -a
+sepolicy manpage -d sshd_t
+
+HINT: /usr/share/man/man8   ## Default MAN8 man page location
+
+
+## Using Additional Man pages for SELinux 
+[root@servere ~]# man /tmp/tangd_selinux.8
+
+## Additional Man Pages 
+man -k semanage
+
+
+## SELinux Booleans 
+
+getsebool -a
+
+setsebool -P    ## Permanently update
+
+
+## SELinux Database for Files 
+/etc/selinux/targeted/contexts/files/file_contexts
+
+
+## SELinux Database for Users 
+/etc/selinux/targeted/contexts/users/*
+
+## SELinux Booleans
+/etc/selinux/targeted/booleans.subs_dist
+/sys/fs/selinux/booleans/   ## Location where settings are stored

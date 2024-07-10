@@ -1,0 +1,17 @@
+man semanage-login
+man semanage-user
+semanage login --help
+
+[root@servere ~]# semanage login -l
+
+
+#### DEMO:
+
+useradd -G wheel -Z sysadm_u travis   ### Doesn't Work
+echo "redhat" | passwd travis --stdin
+
+useradd -G wheel travis2   ### Works
+echo "redhat" | passwd travis2 --stdin
+
+setsebool -P ssh_sysadm_login off
+

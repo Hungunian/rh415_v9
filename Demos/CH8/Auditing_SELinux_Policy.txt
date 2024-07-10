@@ -1,0 +1,26 @@
+[root@servere ~]# dnf install setools-console 
+
+
+seinfo --help
+
+[root@servere ~]# seinfo
+
+[root@servere ~]# seinfo -b
+
+Booleans: 348
+
+### Listing Rules 
+
+sesearch -A
+
+
+### Getting Allowing
+
+man sesearch 
+man seinfo
+man audit2allow
+
+### Looking at Filesystem Context Rules 
+
+semanage fcontext -l 
+ls -alFZ 

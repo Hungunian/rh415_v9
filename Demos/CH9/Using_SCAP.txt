@@ -87,3 +87,30 @@ oscap xccdf eval \
 
 
 http://172.25.250.12/Scan_Results_Report_Custom.html
+
+
+#### Generating Remediation 
+
+oscap xccdf generate fix \
+--profile xccdf_org.ssgproject.content_profile_stig_gui_customized \
+--tailoring-file /root/custom_scap_tailored_file.xml \
+--local-files security-data-oval-com.redhat.rhsa-RHEL9.xml.bz2 \
+--fix-type ansible \
+--result-id "" \
+/root/results_custom.xml > remediation-playbook.yml
+
+scp remediation-playbook.yml student@workstation:
+
+[student@workstation CH9]$ ansible-navigator run remediation-playbook.yml 
+
+#### Run report again after fixing with playbook
+
+oscap xccdf eval \
+--profile xccdf_org.ssgproject.content_profile_stig_gui_customized \
+--tailoring-file /root/custom_scap_tailored_file.xml \
+--local-files security-data-oval-com.redhat.rhsa-RHEL9.xml.bz2 \
+--results /root/results_custom_fixed.xml \
+--report /var/www/html/Scan_Results_Report_Custom_Fixed.html \
+/usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml 
+
+http://172.25.250.12/Scan_Results_Report_Custom_Fixed.html

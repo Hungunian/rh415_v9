@@ -37,3 +37,19 @@ Also run Ansible Roles
 ### Force Compliance Policy to Run 
 
 [root@serverd ~]# cat /etc/cron.d/foreman_scap_client_cron 
+
+
+### Upload custom Tailoring File 
+
+Run new compliance scan 
+
+[student@workstation CH11]$ ansible-navigator run remediation-playbook.yml 
+
+Run compliance scan again :-)
+
+
+
+##### BONUS  #####
+
+ansible-galaxy collection install community.general -p collections/
+

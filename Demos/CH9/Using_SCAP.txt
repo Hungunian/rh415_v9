@@ -114,3 +114,12 @@ oscap xccdf eval \
 /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml 
 
 http://172.25.250.12/Scan_Results_Report_Custom_Fixed.html
+
+
+
+##### BONUS 
+
+[root@serverc ~]# oscap xccdf generate fix --profile xccdf_org.ssgproject.content_profile_stig_gui --local-files security-data-oval-com.redhat.rhsa-RHEL9.xml.bz2 --fix-type ansible  > remediation-playbook_full.yml
+
+oscap xccdf generate fix --profile xccdf_org.ssgproject.content_profile_stig_gui --local-files /root/ --fix-type ansible  /usr/share
+/xml/scap/ssg/content/ssg-rhel9-ds.xml  > remediation-playbook_full.yml

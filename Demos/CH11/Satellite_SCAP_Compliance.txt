@@ -1,0 +1,39 @@
+### Get Systems Ready
+
+lab start compliance-configuring
+
+ssh root@satellite
+
+hammer scap-content list --fields Id,Title
+
+### If no content available ...
+
+hammer scap-content bulk-upload --type default
+
+### If SCAP Client Plugins not available
+
+satellite-installer --enable-foreman-plugin-openscap
+
+
+#### Scanning with satellite
+
+## Upload content if needed
+
+[student@workstation CH11]$ ssh root@satellite "mkdir -p /usr/share/xml/scap/custom" ; scp ssg-rhel9-ds.xml root@satellite:/usr/share/xml/scap/custom
+
+## Import content (If needed)
+
+ssh root@satellite 
+
+hammer scap-content bulk-upload --type directory --organization 'Operations' --directory /usr/share/xml/scap/custom
+
+
+## Create compliance Policy
+
+Satellite => Hosts => Compliance Policy => New Policy
+
+Also run Ansible Roles
+
+### Force Compliance Policy to Run 
+
+[root@serverd ~]# cat /etc/cron.d/foreman_scap_client_cron 

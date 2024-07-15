@@ -1,6 +1,7 @@
 ---
 - name: Play to disable SSH password-based authentication
   hosts: PROD
+  become: true
   tasks:
     - name: Task to disable SSH password-based authentication
       ansible.builtin.lineinfile:
